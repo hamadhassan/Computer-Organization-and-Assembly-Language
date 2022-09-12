@@ -8,11 +8,7 @@ ExitProcess proto,dwExitCode:dword
 
 .code
 main proc
-	mov	eax,1
-    mov ax,5
-	mov ah,3
-	mov ax,2
-	add	eax,6			
+	mov AH,5		
 	invoke ExitProcess,0
 main endp
 end main
