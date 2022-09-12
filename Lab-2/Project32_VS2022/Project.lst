@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.33.31629.0	    09/12/22 15:33:47
+Microsoft (R) Macro Assembler Version 14.33.31629.0	    09/12/22 20:45:45
 AddTwo.asm						     Page 1 - 1
 
 
@@ -12,13 +12,16 @@ AddTwo.asm						     Page 1 - 1
 
  00000000			.code
  00000000			main proc
- 00000000  B4 05			mov AH,5		
+ 00000000  B4 08			mov ah,8
+					;mov eax,7
+					;add eax,ah
+ 00000002  0F B6 C4			movzx eax,ah
 					invoke ExitProcess,0
- 00000002  6A 00	   *	    push   +000000000h
- 00000004  E8 00000000 E   *	    call   ExitProcess
- 00000009			main endp
+ 00000005  6A 00	   *	    push   +000000000h
+ 00000007  E8 00000000 E   *	    call   ExitProcess
+ 0000000C			main endp
 				end main
-Microsoft (R) Macro Assembler Version 14.33.31629.0	    09/12/22 15:33:47
+Microsoft (R) Macro Assembler Version 14.33.31629.0	    09/12/22 20:45:45
 AddTwo.asm						     Symbols 2 - 1
 
 
@@ -31,7 +34,7 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
 _DATA  . . . . . . . . . . . . .	32 Bit	 00000000 DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000009 DWord	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000000C DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -39,7 +42,7 @@ Procedures, parameters, and locals:
                 N a m e                 Type     Value    Attr
 
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000009 Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000000C Public STDCALL
 
 
 Symbols:
