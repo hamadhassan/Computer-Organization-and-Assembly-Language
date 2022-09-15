@@ -1,27 +1,28 @@
-Microsoft (R) Macro Assembler Version 14.33.31629.0	    09/12/22 20:45:45
+Microsoft (R) Macro Assembler Version 14.33.31629.0	    09/15/22 20:08:04
 AddTwo.asm						     Page 1 - 1
 
-
-				; AddTwo.asm - adds two 32-bit integers.
-				; Chapter 3 example
 
 				.386
 				.model flat,stdcall
 				.stack 4096
 				ExitProcess proto,dwExitCode:dword
-
+ 00000000			.data
+ 00000000 00000000		Rval SDWORD ?
+ 00000004 0000001A		Xval SDWORD 26
+ 00000008 0000001E		Yval SDWORD 30
+ 0000000C 00000028		Zval SDWORD 40
  00000000			.code
- 00000000			main proc
- 00000000  B4 08			mov ah,8
-					;mov eax,7
-					;add eax,ah
- 00000002  0F B6 C4			movzx eax,ah
-					invoke ExitProcess,0
- 00000005  6A 00	   *	    push   +000000000h
- 00000007  E8 00000000 E   *	    call   ExitProcess
- 0000000C			main endp
-				end main
-Microsoft (R) Macro Assembler Version 14.33.31629.0	    09/12/22 20:45:45
+ 00000000			main PROC
+ 00000000  B0 7F			mov al,+127
+ 00000002  04 01			add al,1 ; OF = 1
+ 00000004  B0 80			mov al,-128
+ 00000006  2C FF			sub al,-1 ; OF = 0
+					INVOKE ExitProcess,0
+ 00000008  6A 00	   *	    push   +000000000h
+ 0000000A  E8 00000000 E   *	    call   ExitProcess
+ 0000000F			main ENDP
+				END main
+Microsoft (R) Macro Assembler Version 14.33.31629.0	    09/15/22 20:08:04
 AddTwo.asm						     Symbols 2 - 1
 
 
@@ -33,8 +34,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000000C DWord	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000010 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000000F DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -42,7 +43,7 @@ Procedures, parameters, and locals:
                 N a m e                 Type     Value    Attr
 
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000000C Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000000F Public STDCALL
 
 
 Symbols:
@@ -58,6 +59,10 @@ Symbols:
 @fardata?  . . . . . . . . . . .	Text   	 FLAT
 @fardata . . . . . . . . . . . .	Text   	 FLAT
 @stack . . . . . . . . . . . . .	Text   	 FLAT
+Rval . . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+Xval . . . . . . . . . . . . . .	DWord	 00000004 _DATA	
+Yval . . . . . . . . . . . . . .	DWord	 00000008 _DATA	
+Zval . . . . . . . . . . . . . .	DWord	 0000000C _DATA	
 
 	   0 Warnings
 	   0 Errors
