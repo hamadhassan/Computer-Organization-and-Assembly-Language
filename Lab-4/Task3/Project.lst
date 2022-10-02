@@ -1,0 +1,78 @@
+Microsoft (R) Macro Assembler Version 14.33.31629.0	    10/02/22 14:12:15
+AddTwo.asm						     Page 1 - 1
+
+
+				; AddTwo.asm - adds two 32-bit integers.
+				; Chapter 3 example
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+ 00000000			.data
+ = "Monday",0				Mon EQU <"Monday",0>
+ = "Tueaday",0				Tue EQU <"Tueaday",0>
+ = "Wednesday",0			Wed EQU <"Wednesday",0>
+ = "Thursday",0				Thur EQU <"Thursday",0>
+ = "Friday",0				Fri EQU <"Friday",0>
+ = "Saturday",0				Sat EQU <"Saturday",0>
+ = "Sunday",0				Sun EQU <"Sunday",0>
+					list DWORD 
+AddTwo.asm(16) : error A2008:syntax error : in expression
+						Mon,Tue,Wed,Thur,Fri,Sat,Sun
+AddTwo.asm(17) : error A2008:syntax error : Monday
+ 00000000			.code
+ 00000000			main proc
+					
+					invoke ExitProcess,0
+ 00000000  6A 00	   *	    push   +000000000h
+ 00000002  E8 00000000 E   *	    call   ExitProcess
+ 00000007			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.33.31629.0	    10/02/22 14:12:15
+AddTwo.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000007 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000007 Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+Fri  . . . . . . . . . . . . . .	Text   	 "Friday",0
+Mon  . . . . . . . . . . . . . .	Text   	 "Monday",0
+Sat  . . . . . . . . . . . . . .	Text   	 "Saturday",0
+Sun  . . . . . . . . . . . . . .	Text   	 "Sunday",0
+Thur . . . . . . . . . . . . . .	Text   	 "Thursday",0
+Tue  . . . . . . . . . . . . . .	Text   	 "Tueaday",0
+Wed  . . . . . . . . . . . . . .	Text   	 "Wednesday",0
+
+	   0 Warnings
+	   2 Errors

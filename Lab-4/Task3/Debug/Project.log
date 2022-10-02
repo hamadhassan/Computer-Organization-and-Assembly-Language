@@ -1,0 +1,4 @@
+﻿  Assembling AddTwo.asm...
+AddTwo.asm(16): error A2008: syntax error : in expression
+AddTwo.asm(17): error A2008: syntax error : Monday
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC\v170\BuildCustomizations\masm.targets(70,5): error MSB3721: The command "ml.exe /c /nologo /Sg /Zi /Fo"Debug\AddTwo.obj" /Fl"Project.lst" /I "c:\Irvine" /W3 /errorReport:prompt  /TaAddTwo.asm" exited with code 1.
