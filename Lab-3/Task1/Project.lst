@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.33.31629.0	    09/20/22 16:57:20
+Microsoft (R) Macro Assembler Version 14.33.31629.0	    10/02/22 13:13:16
 AddTwo.asm						     Page 1 - 1
 
 
@@ -18,30 +18,14 @@ AddTwo.asm						     Page 1 - 1
 
  00000000			.code
  00000000			main proc
- 00000000  B8 0000000A			mov	eax,10				
- 00000005  83 E8 07			sub	eax,7				
- 00000008  A3 00000004 R		mov op1,eax
-
- 0000000D  B8 00000005			mov eax,5
- 00000012  83 C0 06			add eax,6
- 00000015  A3 00000008 R		mov op2,eax
-
- 0000001A  A1 00000004 R		mov eax,op1
- 0000001F  8B 1D 00000008 R		mov ebx,op2
- 00000025  F7 E3			mul ebx
- 00000027  A3 0000000C R		mov op3,eax
-
- 0000002C  B8 00000009			mov eax,9
- 00000031  8B 1D 0000000C R		mov ebx,op3
- 00000037  F7 E3			mul ebx
- 00000039  A3 00000010 R		mov result,eax
+					
 
 					invoke ExitProcess,0
- 0000003E  6A 00	   *	    push   +000000000h
- 00000040  E8 00000000 E   *	    call   ExitProcess
- 00000045			main endp
+ 00000000  6A 00	   *	    push   +000000000h
+ 00000002  E8 00000000 E   *	    call   ExitProcess
+ 00000007			main endp
 				end main
-Microsoft (R) Macro Assembler Version 14.33.31629.0	    09/20/22 16:57:20
+Microsoft (R) Macro Assembler Version 14.33.31629.0	    10/02/22 13:13:16
 AddTwo.asm						     Symbols 2 - 1
 
 
@@ -54,7 +38,7 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
 _DATA  . . . . . . . . . . . . .	32 Bit	 00000014 DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000045 DWord	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000007 DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -62,7 +46,7 @@ Procedures, parameters, and locals:
                 N a m e                 Type     Value    Attr
 
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000045 Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000007 Public STDCALL
 
 
 Symbols:
