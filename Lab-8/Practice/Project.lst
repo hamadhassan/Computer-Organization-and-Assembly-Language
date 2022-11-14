@@ -1,6 +1,5 @@
-Microsoft (R) Macro Assembler Version 14.33.31629.0	    11/13/22 12:44:18
+Microsoft (R) Macro Assembler Version 14.33.31629.0	    11/14/22 16:33:58
 AddTwo.asm						     Page 1 - 1
-
 
 
 				Include Irvine32.inc
@@ -21,45 +20,43 @@ AddTwo.asm						     Page 1 - 1
 			      C .NOLIST
 			      C .LIST
 			      C 
-
  00000000			.data
- 00000000 00000000			myVar dword ?
- 00000004 45 6E 74 65 72		prompt byte "Enter your marks : ",0
-	   20 79 6F 75 72
-	   20 6D 61 72 6B
-	   73 20 3A 20 00
- 00000018 59 6F 75 72 20		result byte "Your grade is : ",0
-	   67 72 61 64 65
-	   20 69 73 20 3A
-	   20 00
-
- 00000000			.code                               
-				                           
- 00000000			main proc
- 00000000  BA 00000004 R		mov edx,offset prompt	; store the prompt message  "Enter your marks : " into edx
- 00000005  E8 00000000 E		call writestring		; display the message
- 0000000A  E8 00000000 E		call readint			; take user input
- 0000000F  A3 00000000 R		mov myvar,eax			; store user input into myvar
- 00000014  BA 00000018 R		mov edx, offset result	; store the prompt message "Your grade is : " into edx
- 00000019  E8 00000000 E		call writestring		; display the message 
- 0000001E  A1 00000000 R		mov eax, myvar			; mov the store user input into eax
- 00000023  E8 00000000 E		call writeint			; dispay the userinput
-
-					invoke ExitProcess,0
- 00000028  6A 00	   *	    push   +000000000h
- 0000002A  E8 00000000 E   *	    call   ExitProcess
-
- 0000002F			main endp
-				end main
-
-
-
-				             
-
-
-
-							
-Microsoft (R) Macro Assembler Version 14.33.31629.0	    11/13/22 12:44:18
+ 00000000 0000 0000 0000		intArray SWORD 0,0,0,0,20,35,-12,66,4,0			;intArray SWORD 0,0,0,0
+	   0000 0014 0023
+	   FFF4 0042 0004
+	   0000
+ 00000014 41 20 6E 6F 6E		noneMsg BYTE "A non-zero value was not found",0
+	   2D 7A 65 72 6F
+	   20 76 61 6C 75
+	   65 20 77 61 73
+	   20 6E 6F 74 20
+	   66 6F 75 6E 64
+	   00
+ 00000000			.code
+ 00000000			main PROC
+ 00000000  BB 00000000 R		mov ebx,OFFSET intArray		; point to the array
+ 00000005  B9 0000000A			mov ecx,LENGTHOF intArray	; loop counter
+ 0000000A				L1:
+ 0000000A  66| 83 3B 00				cmp WORD PTR [ebx],0	; compare value to zero
+ 0000000E  75 07				jnz found				; found a value
+ 00000010  83 C3 02				add ebx,TYPE intArray	; point to next index
+ 00000013  E2 F5				loop L1					; continue the loop
+ 00000015  EB 0A				jmp notFound			; none found
+ 00000017				found:
+ 00000017  0F BF 03				movsx eax,WORD PTR [ebx]	; otherwise, display it
+ 0000001A  E8 00000000 E			call WriteInt
+ 0000001F  EB 0A				jmp quit
+ 00000021				notFound:
+ 00000021  BA 00000014 R			mov edx,OFFSET noneMsg		; display "not found" message
+ 00000026  E8 00000000 E			call WriteString
+ 0000002B				quit:
+ 0000002B  E8 00000000 E			call crlf
+					exit
+ 00000030  6A 00	   *	    push   +000000000h
+ 00000032  E8 00000000 E   *	    call   ExitProcess
+ 00000037			main ENDP
+				END main
+Microsoft (R) Macro Assembler Version 14.33.31629.0	    11/14/22 16:33:58
 AddTwo.asm						     Symbols 2 - 1
 
 
@@ -153,8 +150,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000029 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000002F Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000033 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000037 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -261,7 +258,11 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000002F Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000037 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 0000000A _TEXT	
+  found  . . . . . . . . . . . .	L Near	 00000017 _TEXT	
+  notFound . . . . . . . . . . .	L Near	 00000021 _TEXT	
+  quit . . . . . . . . . . . . .	L Near	 0000002B _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -487,6 +488,7 @@ cyan . . . . . . . . . . . . . .	Number	 00000003h
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
+intArray . . . . . . . . . . . .	Word	 00000000 _DATA	
 lightBlue  . . . . . . . . . . .	Number	 00000009h   
 lightCyan  . . . . . . . . . . .	Number	 0000000Bh   
 lightGray  . . . . . . . . . . .	Number	 00000007h   
@@ -494,10 +496,8 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
-myVar  . . . . . . . . . . . . .	DWord	 00000000 _DATA	
-prompt . . . . . . . . . . . . .	Byte	 00000004 _DATA	
+noneMsg  . . . . . . . . . . . .	Byte	 00000014 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
-result . . . . . . . . . . . . .	Byte	 00000018 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   

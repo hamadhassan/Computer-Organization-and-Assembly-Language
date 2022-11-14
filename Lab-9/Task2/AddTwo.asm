@@ -1,32 +1,19 @@
-
 Include Irvine32.inc
-
 .data
-	myArray SDWORD -8, 6, 5, 10, -22, 0, 87, 6, 9, -90
-
-.code                               
-                           
+	var1 DWORD 4
+	var2 DWORD 6
+	message1 BYTE "var1 is greater than var2",0
+	message2 BYTE "var1 is less than var2",0
+.code
 main PROC
-	moc e
-	.WHILE eax < ebx
-		inc eax
-		.IF eax == ecx
-			mov X,2
-		.ELSE
-			mov X,3
+	mov EAX,var1
+	.IF (EAX > var2 && EAX>var3)
+		mov EDX,OFFSET message1
+		call WriteString
+	.ELSEIF EAX < var2
+		mov EDX,OFFSET message2
+	call WriteString
 	.ENDIF
-	.ENDW
 exit
-	
-	invoke ExitProcess,0
-
-main endp
+main ENDP
 end main
-
-
-
-             
-
-
-
-			
