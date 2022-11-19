@@ -1,50 +1,34 @@
-
 Include Irvine32.inc
-
 .data
-	marks dword 80
-	grade dword ?
-	prompt byte "Enter your marks : ",0
-	result byte "Your grade is : ",0
-
-.code                               
-                           
-main proc
-	;mov edx,offset prompt	; store the prompt message  "Enter your marks : " into edx
-	;call writestring		; display the message
-	;call readint			; take user input
-	;mov eax,marks			; store user input into marks
-
-	mov eax,marks	;It will delete after program compleation
-
-	cmp eax,90				; evaluate the condition
-	JA 	L1					; Jump if greater then 90 
-	JE	L2					; jum if marks equal to 90
-	cmp eax,80				; evaluate the condition
-	JA 	L2					; Jum if marks greater than 80
-	cmp eax,70				; evaluate the condition
-	JA 	L3					; Jump if greater then 70 
-	JLE	L4					; jum if marks less than or equal to 70
-	
-	L1: mov grade,10		; Your garde is A
-	L2: mov grade,11		; Your garde is B
-	L3: mov grade,12		; Your garde is C
-	L4: mov grade,13		; Your garde is D
-
-	mov edx, offset result	; store the prompt message "Your grade is : " into edx
-	call writestring		; display the message 
-	mov eax, grade			; mov the store user input into eax
-	call writeint			; dispay the userinput
-
-	invoke ExitProcess,0
-
-main endp
-end main
-
-
-
-             
-
-
-
-			
+	ArraySize = 3
+	array BYTE ArraySize DUP(99h) ; 1001 pattern in each nybble
+.code
+main PROC
+	call DisplayArray ; display the array
+	mov esi,0
+	shr array[esi+2],1 ; high byte
+	rcr array[esi+1],1 ; middle byte, include Carry flag
+	rcr array[esi],1 ; low byte, include Carry flag
+	call DisplayArray ; display the array
+exit
+main ENDP
+;----------------------------------------------------
+DisplayArray PROC
+; Display the bytes from highest to lowest
+;----------------------------------------------------
+pushad
+	mov ecx,ArraySize
+	mov esi,ArraySize-1
+L1:
+	mov al,array[esi]
+	mov ebx,1 ; size = byte
+	call WriteBinB ; display binary bits
+	mov al,' '
+	call WriteChar
+	sub esi,1
+	Loop L1
+	call Crlf
+	popad
+	ret
+DisplayArray ENDP
+END main

@@ -1,5 +1,6 @@
-Microsoft (R) Macro Assembler Version 14.33.31629.0	    11/20/22 10:25:19
+Microsoft (R) Macro Assembler Version 14.33.31629.0	    11/14/22 17:23:26
 AddTwo.asm						     Page 1 - 1
+
 
 
 				Include Irvine32.inc
@@ -20,44 +21,67 @@ AddTwo.asm						     Page 1 - 1
 			      C .NOLIST
 			      C .LIST
 			      C 
+
  00000000			.data
- = 00000003				ArraySize = 3
- 00000000  00000003 [			array BYTE ArraySize DUP(99h) ; 1001 pattern in each nybble
-	    99
-	   ]
- 00000000			.code
- 00000000			main PROC
- 00000000  E8 00000023			call DisplayArray ; display the array
- 00000005  BE 00000000			mov esi,0
- 0000000A  D0 AE 00000002 R		shr array[esi+2],1 ; high byte
- 00000010  D0 9E 00000001 R		rcr array[esi+1],1 ; middle byte, include Carry flag
- 00000016  D0 9E 00000000 R		rcr array[esi],1 ; low byte, include Carry flag
- 0000001C  E8 00000007			call DisplayArray ; display the array
-				exit
- 00000021  6A 00	   *	    push   +000000000h
- 00000023  E8 00000000 E   *	    call   ExitProcess
- 00000028			main ENDP
-				;----------------------------------------------------
- 00000028			DisplayArray PROC
-				; Display the bytes from highest to lowest
-				;----------------------------------------------------
- 00000028  60			pushad
- 00000029  B9 00000003			mov ecx,ArraySize
- 0000002E  BE 00000002			mov esi,ArraySize-1
- 00000033			L1:
- 00000033  8A 86 00000000 R		mov al,array[esi]
- 00000039  BB 00000001			mov ebx,1 ; size = byte
- 0000003E  E8 00000000 E		call WriteBinB ; display binary bits
- 00000043  B0 20			mov al,' '
- 00000045  E8 00000000 E		call WriteChar
- 0000004A  83 EE 01			sub esi,1
- 0000004D  E2 E4			Loop L1
- 0000004F  E8 00000000 E		call Crlf
- 00000054  61				popad
- 00000055  C3				ret
- 00000056			DisplayArray ENDP
-				END main
-Microsoft (R) Macro Assembler Version 14.33.31629.0	    11/20/22 10:25:19
+ 00000000 00000050			marks dword 80
+ 00000004 00000000			grade dword ?
+ 00000008 45 6E 74 65 72		prompt byte "Enter your marks : ",0
+	   20 79 6F 75 72
+	   20 6D 61 72 6B
+	   73 20 3A 20 00
+ 0000001C 59 6F 75 72 20		result byte "Your grade is : ",0
+	   67 72 61 64 65
+	   20 69 73 20 3A
+	   20 00
+
+ 00000000			.code                               
+				                           
+ 00000000			main proc
+					;mov edx,offset prompt	; store the prompt message  "Enter your marks : " into edx
+					;call writestring		; display the message
+					;call readint			; take user input
+					;mov eax,marks			; store user input into marks
+
+ 00000000  A1 00000000 R		mov eax,marks	;It will delete after program compleation
+
+ 00000005  83 F8 5A			cmp eax,90				; evaluate the condition
+ 00000008  77 0E			JA 	L1					; Jump if greater then 90 
+ 0000000A  74 16			JE	L2					; jum if marks equal to 90
+ 0000000C  83 F8 50			cmp eax,80				; evaluate the condition
+ 0000000F  77 11			JA 	L2					; Jum if marks greater than 80
+ 00000011  83 F8 46			cmp eax,70				; evaluate the condition
+ 00000014  77 16			JA 	L3					; Jump if greater then 70 
+ 00000016  7E 1E			JLE	L4					; jum if marks less than or equal to 70
+					
+ 00000018  C7 05 00000004 R		L1: mov grade,10		; Your garde is A
+	   0000000A
+ 00000022  C7 05 00000004 R		L2: mov grade,11		; Your garde is B
+	   0000000B
+ 0000002C  C7 05 00000004 R		L3: mov grade,12		; Your garde is C
+	   0000000C
+ 00000036  C7 05 00000004 R		L4: mov grade,13		; Your garde is D
+	   0000000D
+
+ 00000040  BA 0000001C R		mov edx, offset result	; store the prompt message "Your grade is : " into edx
+ 00000045  E8 00000000 E		call writestring		; display the message 
+ 0000004A  A1 00000004 R		mov eax, grade			; mov the store user input into eax
+ 0000004F  E8 00000000 E		call writeint			; dispay the userinput
+
+					invoke ExitProcess,0
+ 00000054  6A 00	   *	    push   +000000000h
+ 00000056  E8 00000000 E   *	    call   ExitProcess
+
+ 0000005B			main endp
+				end main
+
+
+
+				             
+
+
+
+							
+Microsoft (R) Macro Assembler Version 14.33.31629.0	    11/14/22 17:23:26
 AddTwo.asm						     Symbols 2 - 1
 
 
@@ -151,8 +175,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000003 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000056 Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000002D Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000005B Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -166,8 +190,6 @@ CreateFileA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 CreateOutputFile . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Crlf . . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Delay  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-DisplayArray . . . . . . . . . .	P Near	 00000028 _TEXT	Length= 0000002E Public STDCALL
-  L1 . . . . . . . . . . . . . .	L Near	 00000033 _TEXT	
 DumpMem  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 DumpRegs . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -261,7 +283,11 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000028 Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000005B Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 00000018 _TEXT	
+  L2 . . . . . . . . . . . . . .	L Near	 00000022 _TEXT	
+  L3 . . . . . . . . . . . . . .	L Near	 0000002C _TEXT	
+  L4 . . . . . . . . . . . . . .	L Near	 00000036 _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -281,7 +307,6 @@ Symbols:
 @fardata . . . . . . . . . . . .	Text   	 FLAT
 @stack . . . . . . . . . . . . .	Text   	 FLAT
 ALT_MASK . . . . . . . . . . . .	Number	 00000003h   
-ArraySize  . . . . . . . . . . .	Number	 00000003h   
 CAPSLOCK_ON  . . . . . . . . . .	Number	 00000080h   
 CREATE_ALWAYS  . . . . . . . . .	Number	 00000002h   
 CREATE_NEW . . . . . . . . . . .	Number	 00000001h   
@@ -481,12 +506,12 @@ VK_UP  . . . . . . . . . . . . .	Number	 00000026h
 WINDOW_BUFFER_SIZE_EVENT . . . .	Number	 00000004h   
 WriteConsoleOutputCharacter  . .	Text   	 WriteConsoleOutputCharacterA
 WriteConsole . . . . . . . . . .	Text   	 WriteConsoleA
-array  . . . . . . . . . . . . .	Byte	 00000000 _DATA	
 black  . . . . . . . . . . . . .	Number	 00000000h   
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
+grade  . . . . . . . . . . . . .	DWord	 00000004 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
 lightBlue  . . . . . . . . . . .	Number	 00000009h   
@@ -496,7 +521,10 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
+marks  . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+prompt . . . . . . . . . . . . .	Byte	 00000008 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
+result . . . . . . . . . . . . .	Byte	 0000001C _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
