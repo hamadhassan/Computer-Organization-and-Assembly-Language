@@ -1,0 +1,4 @@
+D:\COMPUTER SCIENCE\3rd Semester\Computer Organization and Assembly Language-COAL\Lab\Lab-6\Question 1\Subtraction\Debug\Project.exe
+D:\COMPUTER SCIENCE\3rd Semester\Computer Organization and Assembly Language-COAL\Lab\Lab-6\Question 5\Subtraction_2\Debug\Project.exe
+D:\COMPUTER SCIENCE\3rd Semester\Computer Organization and Assembly Language-COAL\Lab\Lab-6\Question 9\exchange\Debug\Project.exe
+D:\COMPUTER SCIENCE\3rd Semester\Computer Organization and Assembly Language-COAL\Lab\Lab-6\Question 11\get length and size\Debug\Project.exe
